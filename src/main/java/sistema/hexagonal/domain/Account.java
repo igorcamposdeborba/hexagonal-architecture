@@ -41,7 +41,7 @@ public class Account {
 		
 		balance = balance.add(amount);
 	}
-	public void debit(BigDecimal amount) {
+	public void debit(BigDecimal amount) throws BusinessException {
 		if (Objects.isNull(amount)) { throw new BusinessException("Informe o valor a ser debitado"); }
 		else if (amount.compareTo(BigDecimal.ZERO) <= 0) { throw new BusinessException("Informe um valor maior que zero a ser debitado"); }
 		else if (amount.compareTo(this.balance) > 0) { throw new BusinessException("Saldo insuficiente"); }

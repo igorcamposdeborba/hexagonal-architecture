@@ -22,7 +22,7 @@ public class AccountTest {
 	*/
 
 	@Test
-	void positiveCredit_ShouldCreditBalance() {
+	void positiveCredit_ShouldCreditBalance() throws BusinessException {
 		// Arrange
 		final BigDecimal balance = new BigDecimal(100);
 		final BigDecimal amount = new BigDecimal(1);
@@ -73,7 +73,7 @@ public class AccountTest {
 	
 	
 	@Test
-	void positiveDebit_ShouldDebitBalance() {
+	void positiveDebit_ShouldDebitBalance() throws BusinessException {
 		// Arrange
 		final BigDecimal balance = new BigDecimal(100);
 		final BigDecimal amount = new BigDecimal(100);
