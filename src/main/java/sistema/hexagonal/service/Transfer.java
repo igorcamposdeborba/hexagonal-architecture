@@ -7,6 +7,7 @@ import sistema.hexagonal.domain.Account;
 import sistema.hexagonal.domain.exceptions.BusinessException;
 import sistema.hexagonal.domain.exceptions.ExceptionHandler;
 
+// @Named // Injeção de dependência caso não coloque como static o método. Daí @Named vai instanciar automaticamente assim como faz o @Autowired. @Named é do Java EE e @Autowired é do SpringBoot (não misture frameworks, ou use uma ou use outra annotation)
 public class Transfer {
 
 	public static void initiateTransfer(BigDecimal amount, Account debit, Account credit) throws ExceptionHandler, BusinessException {
