@@ -57,4 +57,19 @@ public class Account {
 	public String toString() {
 		return "Account [accountId=" + accountId + ", balance=" + balance + ", owner=" + owner + "]";
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(accountId);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		return Objects.equals(accountId, other.accountId);
+	}
 }

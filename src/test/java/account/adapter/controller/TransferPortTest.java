@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import account.hexagonal.controller.TransferPort;
+import account.hexagonal.entities.Account;
 import account.hexagonal.entities.exceptions.BusinessException;
 import account.hexagonal.entities.exceptions.ExceptionHandler;
 
@@ -48,7 +49,24 @@ public class TransferPortTest {
 	}
 	
 	@Test
-	void getAccountById_ShouldReturnAccount() {
+	void getAccountById_ShouldReturnAccount() throws ExceptionHandler, BusinessException {
+		// Arrange
+		BigDecimal balance1 = new BigDecimal(100);
+		BigDecimal balance2 = new BigDecimal(500);
 		
+		Integer originAccountId = 1;
+		Account originAccount = new Account(1, new BigDecimal(100), "Igor");
+		
+		Integer destinityAccountId = 2;
+		Account destinityAccount = new Account(2, new BigDecimal(500), "Roberto");
+		
+		Integer unexistsAccountId = 30;
+		Integer nullAccountId = null;
+		
+		// Act
+		Account account = transferPort.getAccountById(originAccountId);
+		
+		// Assert
+		Assertions.assertEquals(originAccount, account);
 	}
 }
