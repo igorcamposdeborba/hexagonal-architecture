@@ -26,9 +26,15 @@ public class TransferPortImpl implements TransferPort {
 	}
 	
 	@Override
-	public Account getAccountById(Integer accountId) throws ExceptionHandler {
+	public Account getAccountById(Integer accountId) throws ExceptionHandler, BusinessException {
 		if (Objects.isNull(accountId)) { throw new ExceptionHandler("Informe o ID da conta"); }
-		return accountRepository.getAccountById(accountId);
+		
+		Account accountDatabase = accountRepository.getAccountById(accountId);
+		if (Objects.isNull(accountDatabase)) {
+			ExceptionHandler.unexists(accountId.toString());
+		}
+		
+		return accountDatabase;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import account.hexagonal.entities.exceptions.ExceptionHandler;
 
 public interface TransferPort {
 
-	public Account getAccountById(Integer accountId) throws ExceptionHandler;
+	public Account getAccountById(Integer accountId) throws ExceptionHandler, BusinessException;
 	
 	public void transfer(BigDecimal amount, Account debit, Account credit) throws ExceptionHandler, BusinessException;
 }

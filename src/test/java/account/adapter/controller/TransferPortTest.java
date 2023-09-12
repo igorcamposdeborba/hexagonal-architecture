@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import account.hexagonal.controller.TransferPort;
+import account.hexagonal.entities.exceptions.BusinessException;
 import account.hexagonal.entities.exceptions.ExceptionHandler;
 
 @ContextConfiguration(classes = TransferPortImplTest.class) // para pegar as configurações da classe TransferPortImplTest para injetar dependências
@@ -23,6 +24,16 @@ public class TransferPortTest {
 	@Test
 	void nullAccountId_ShouldThrowsExceptionHandler_WhenMethodGetAccountByIdIsCalled() {
 		// Arrange
+		Integer nullAccountId = null;
+		
+		// Assert
+		ExceptionHandler message = Assertions.assertThrows(ExceptionHandler.class, () -> transferPort.getAccountById(nullAccountId), "Revise os parametros e a logica de processamento");
+		Assertions.assertEquals("Informe o ID da conta", message.getMessage());
+	}
+	
+	@Test
+	void unexistsAccountId_ShouldThrowsExceptionHandler_WhenMethodGetAccountByIdIsCalled() {
+		// Arrange
 		BigDecimal balance1 = new BigDecimal(100);
 		BigDecimal balance2 = new BigDecimal(500);
 		
@@ -32,8 +43,8 @@ public class TransferPortTest {
 		Integer nullAccountId = null;
 		
 		// Assert
-		ExceptionHandler message = Assertions.assertThrows(ExceptionHandler.class, () -> transferPort.getAccountById(nullAccountId), "Revise os parametros e a logica de processamento");
-		Assertions.assertEquals("Informe o ID da conta", message.getMessage());
+		BusinessException message = Assertions.assertThrows(BusinessException.class, () -> transferPort.getAccountById(unexistsAccountId), "Revise os parametros e a logica de processamento");
+		Assertions.assertEquals(unexistsAccountId + " eh inexistente", message.getMessage());
 	}
 	
 	@Test
