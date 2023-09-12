@@ -2,10 +2,10 @@ module conta.sistema {
 	
 	requires javax.inject;
 	requires spring.tx;
-	
+
 	// expondo porta de entrada (driver) com os endpoints/front-end
     exports account.adapter.controller;
-=
+
     // expondo sistema negocio (service)
     exports account.hexagonal.service;
 
