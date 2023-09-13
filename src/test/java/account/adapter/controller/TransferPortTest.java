@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.math.BigDecimal;
 
 import javax.inject.Inject;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,6 +18,7 @@ import account.hexagonal.controller.TransferPort;
 import account.hexagonal.entities.Account;
 import account.hexagonal.entities.exceptions.BusinessException;
 import account.hexagonal.entities.exceptions.ExceptionHandler;
+import account.hexagonal.repositories.AccountRepository;
 
 /* Tests:
    Method getAccountById:
@@ -34,6 +38,9 @@ public class TransferPortTest {
 	
 	@Inject // injetar dependências para criar os objetos
 	TransferPort transferPort;
+	
+	@Inject
+	AccountRepository accountRepository;
 	
 	@Test
 	void getAccountById_ShouldReturnAccount() throws ExceptionHandler, BusinessException {
@@ -89,6 +96,17 @@ public class TransferPortTest {
 		// Assert
 		Assertions.assertEquals(new BigDecimal(50), transferPort.getAccountById(originAccountId).getBalance());
 		Assertions.assertEquals(new BigDecimal(550), transferPort.getAccountById(destinityAccountId).getBalance());
+	}
+	
+	@AfterEach
+	void resetDatabase() throws ExceptionHandler, BusinessException {
+		// Arrange
+		Account originAccount = new Account(1, new BigDecimal(100), "Igor");
+		Account destinityAccount = new Account(2, new BigDecimal(500), "Roberto");
+		
+		// Act
+		accountRepository.updateAccount(originAccount);
+		accountRepository.updateAccount(destinityAccount);
 	}
 	
 	@Test
