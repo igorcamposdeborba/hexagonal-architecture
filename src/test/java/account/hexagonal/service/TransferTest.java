@@ -2,13 +2,16 @@ package account.hexagonal.service;
 
 import java.math.BigDecimal;
 
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import account.hexagonal.entities.Account;
 import account.hexagonal.entities.exceptions.BusinessException;
 import account.hexagonal.entities.exceptions.ExceptionHandler;
-import account.hexagonal.service.Transfer;
+import account.hexagonal.repositories.AccountRepository;
 
 public class TransferTest {
 

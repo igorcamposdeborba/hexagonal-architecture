@@ -18,7 +18,7 @@ import account.hexagonal.service.Transfer;
 @Named // Injeção de dependência (Bean de configuração) caso não coloque como static o método. Daí @Named vai instanciar automaticamente
 public class TransferPortImpl implements TransferPort {
 
-	private AccountRepository accountRepository;
+	private AccountRepository accountRepository; // associação com o banco de dados
 	
 	@Inject // Injeta dependência primeiro aqui
 	public TransferPortImpl(AccountRepository accountRepository) {
@@ -47,9 +47,11 @@ public class TransferPortImpl implements TransferPort {
 			ExceptionHandler.sameAccount();
 		}
 		
-		Transfer.initiateTransfer(amount, debit, credit); // atualizar java entity
-		originAccount.debit(amount); // atualizar banco de dados
-		destinationAccount.credit(amount);
+		Transfer.initiateTransfer(amount, originAccount, destinationAccount); // atualizar java entity por meio do service
+		accountRepository.updateAccount(originAccount); // atualizar banco de dados
+		accountRepository.updateAccount(destinationAccount); // atualizar banco de dados
+		// originAccount.debit(amount); // atualizar objeto atual
+		// destinationAccount.credit(amount); // atualizar objeto atual
 	}
 
 }
