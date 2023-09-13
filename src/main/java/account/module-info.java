@@ -12,4 +12,11 @@ module conta.sistema {
 
     // expondo adaptadores de saídas (driven) banco de dados
     exports account.adapter.repositories;
+    
+    // Abrir reflexão
+    opens account.hexagonal.controller;
+    opens account.hexagonal.entities;
+    opens account.hexagonal.service;
+    opens account.adapter;
+    
 }
