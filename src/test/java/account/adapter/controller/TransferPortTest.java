@@ -36,11 +36,22 @@ import account.hexagonal.repositories.AccountRepository;
 @ExtendWith(SpringExtension.class) // integra o JUnit e SpringBoot
 public class TransferPortTest {
 	
-	@Inject // injetar dependências para criar os objetos
+	@Inject // injetar dependências para criar os objetos. Se comunica com o Controller
 	TransferPort transferPort;
 	
 	@Inject
-	AccountRepository accountRepository;
+	AccountRepository accountRepository; // Se comunica com o repository (banco de dados) para resetar o balance para o inicial após cada teste
+	
+	@AfterEach
+	void resetDatabase() throws ExceptionHandler, BusinessException {
+		// Arrange
+		Account originAccount = new Account(1, new BigDecimal(100), "Igor");
+		Account destinityAccount = new Account(2, new BigDecimal(500), "Roberto");
+		
+		// Act
+		accountRepository.updateAccount(originAccount);
+		accountRepository.updateAccount(destinityAccount);
+	}
 	
 	@Test
 	void getAccountById_ShouldReturnAccount() throws ExceptionHandler, BusinessException {
@@ -96,17 +107,6 @@ public class TransferPortTest {
 		// Assert
 		Assertions.assertEquals(new BigDecimal(50), transferPort.getAccountById(originAccountId).getBalance());
 		Assertions.assertEquals(new BigDecimal(550), transferPort.getAccountById(destinityAccountId).getBalance());
-	}
-	
-	@AfterEach
-	void resetDatabase() throws ExceptionHandler, BusinessException {
-		// Arrange
-		Account originAccount = new Account(1, new BigDecimal(100), "Igor");
-		Account destinityAccount = new Account(2, new BigDecimal(500), "Roberto");
-		
-		// Act
-		accountRepository.updateAccount(originAccount);
-		accountRepository.updateAccount(destinityAccount);
 	}
 	
 	@Test
