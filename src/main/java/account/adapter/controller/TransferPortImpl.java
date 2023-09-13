@@ -48,8 +48,8 @@ public class TransferPortImpl implements TransferPort {
 		}
 		
 		Transfer.initiateTransfer(amount, debit, credit); // atualizar java entity
-		originAccount.debit(amount); // atualizar banco de dados
-		destinationAccount.credit(amount);
+		// originAccount.debit(amount); // atualizar banco de dados
+		// destinationAccount.credit(amount);
 	}
 
 }

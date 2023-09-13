@@ -59,7 +59,7 @@ public class Account {
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(accountId);
+		return Objects.hash(accountId, balance, owner);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -70,6 +70,8 @@ public class Account {
 		if (getClass() != obj.getClass())
 			return false;
 		Account other = (Account) obj;
-		return Objects.equals(accountId, other.accountId);
+		return Objects.equals(accountId, other.accountId) && Objects.equals(balance, other.balance)
+				&& Objects.equals(owner, other.owner);
 	}
+
 }
